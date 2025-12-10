@@ -1,4 +1,3 @@
-# library_app.py
 import tkinter as tk
 from tkinter import ttk, messagebox
 from database import (
@@ -15,14 +14,12 @@ class LibraryApp:
         self.root.geometry("900x650")
         self.root.configure(bg="#f8fafc")  # nordycki jasny background
 
-        # Styl
         style = ttk.Style()
         style.theme_use('clam')
         style.configure("Treeview", rowheight=25)
         style.configure("TNotebook", background="#f1f5f9")
         style.map("TNotebook.Tab", background=[("selected", "#e2e8f0")])
 
-        # Zakładki
         notebook = ttk.Notebook(root)
         notebook.pack(pady=10, padx=10, fill=tk.BOTH, expand=True)
 
@@ -38,14 +35,12 @@ class LibraryApp:
         self.create_members_tab()
         self.create_loans_tab()
 
-        # Przyciski eksportu na dole
         export_frame = ttk.Frame(root)
         export_frame.pack(pady=5, side=tk.BOTTOM, fill=tk.X)
         ttk.Button(export_frame, text="📥 Książki (CSV)", command=self.export_books).pack(side=tk.LEFT, padx=5)
         ttk.Button(export_frame, text="📥 Czytelnicy (CSV)", command=self.export_members).pack(side=tk.LEFT, padx=5)
         ttk.Button(export_frame, text="📥 Wypożyczenia (CSV)", command=self.export_loans).pack(side=tk.LEFT, padx=5)
 
-    # ----------- KSIĄŻKI -----------
     def create_books_tab(self):
         # Wyszukiwanie
         search_frame = ttk.Frame(self.books_frame)
@@ -56,7 +51,7 @@ class LibraryApp:
         ttk.Button(search_frame, text="🔍 Szukaj", command=self.search_books).pack(side=tk.LEFT, padx=5)
         ttk.Button(search_frame, text="↺ Wszystkie", command=self.refresh_books).pack(side=tk.LEFT, padx=5)
 
-        # Tabela
+        
         columns = ("ID", "Tytuł", "Autor", "ISBN", "Rok", "Dostępne")
         self.books_tree = ttk.Treeview(self.books_frame, columns=columns, show="headings", height=12)
         for col in columns:
@@ -64,7 +59,6 @@ class LibraryApp:
             self.books_tree.column(col, width=100)
         self.books_tree.pack(fill=tk.BOTH, expand=True, padx=10, pady=5)
 
-        # Formularz dodawania
         form = ttk.Frame(self.books_frame)
         form.pack(fill=tk.X, padx=10, pady=10)
         ttk.Label(form, text="Tytuł:").grid(row=0, column=0, sticky=tk.W)
@@ -135,7 +129,6 @@ class LibraryApp:
         self.book_isbn.delete(0, tk.END)
         self.book_year.delete(0, tk.END)
 
-    # ----------- CZYTELNICY -----------
     def create_members_tab(self):
         search_frame = ttk.Frame(self.members_frame)
         search_frame.pack(fill=tk.X, padx=10, pady=(0, 10))
@@ -203,7 +196,6 @@ class LibraryApp:
         self.mem_first.delete(0, tk.END)
         self.mem_last.delete(0, tk.END)
 
-    # ----------- WYPOŻYCZENIA -----------
     def create_loans_tab(self):
         top = ttk.Frame(self.loans_frame)
         top.pack(fill=tk.X, padx=20, pady=10)
@@ -277,7 +269,6 @@ class LibraryApp:
                 loan["return_date"] or "–"
             ))
 
-    # ----------- EKSPORT -----------
     def export_books(self):
         try:
             export_books_to_csv()
@@ -303,4 +294,5 @@ class LibraryApp:
 if __name__ == "__main__":
     root = tk.Tk()
     app = LibraryApp(root)
+
     root.mainloop()
