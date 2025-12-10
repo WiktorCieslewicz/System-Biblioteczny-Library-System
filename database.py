@@ -44,7 +44,6 @@ def init_db():
     conn.commit()
     conn.close()
 
-# --- Pobieranie danych ---
 def get_all_books():
     conn = sqlite3.connect('library.db')
     conn.row_factory = sqlite3.Row
@@ -63,7 +62,6 @@ def get_all_members():
     conn.close()
     return data
 
-# --- Wyszukiwanie ---
 def search_books(query):
     conn = sqlite3.connect('library.db')
     conn.row_factory = sqlite3.Row
@@ -88,7 +86,6 @@ def search_members(query):
     conn.close()
     return data
 
-# --- Dodawanie ---
 def add_book(title, author, isbn=None, year=None, copies=1):
     conn = sqlite3.connect('library.db')
     cursor = conn.cursor()
@@ -109,7 +106,6 @@ def add_member(first_name, last_name, email=None, phone=None):
     conn.commit()
     conn.close()
 
-# --- Wypożyczanie / Zwrot ---
 def borrow_book(book_id, member_id):
     conn = sqlite3.connect('library.db')
     cursor = conn.cursor()
@@ -142,7 +138,6 @@ def return_book(book_id, member_id):
     conn.close()
     return True
 
-# --- Historia ---
 def get_loan_history_for_member(member_id):
     conn = sqlite3.connect('library.db')
     conn.row_factory = sqlite3.Row
@@ -158,7 +153,6 @@ def get_loan_history_for_member(member_id):
     conn.close()
     return data
 
-# --- Eksport do CSV ---
 def export_books_to_csv(filename="books.csv"):
     with sqlite3.connect('library.db') as conn:
         cursor = conn.cursor()
@@ -192,5 +186,5 @@ def export_loans_to_csv(filename="loans.csv"):
             writer.writerow(["ID wypożyczenia", "Książka", "Czytelnik", "Data wypożyczenia", "Termin zwrotu", "Data zwrotu"])
             writer.writerows(cursor.fetchall())
 
-# Inicjalizacja przy imporcie
+
 init_db()
