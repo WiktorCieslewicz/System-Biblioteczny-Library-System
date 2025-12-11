@@ -42,7 +42,6 @@ class LibraryApp:
         ttk.Button(export_frame, text="📥 Wypożyczenia (CSV)", command=self.export_loans).pack(side=tk.LEFT, padx=5)
 
     def create_books_tab(self):
-        # Wyszukiwanie
         search_frame = ttk.Frame(self.books_frame)
         search_frame.pack(fill=tk.X, padx=10, pady=(0, 10))
         ttk.Label(search_frame, text="Szukaj (tytuł, autor, ISBN):").pack(side=tk.LEFT)
@@ -290,9 +289,9 @@ class LibraryApp:
         except Exception as e:
             messagebox.showerror("Błąd", str(e))
 
-# Uruchomienie
 if __name__ == "__main__":
     root = tk.Tk()
     app = LibraryApp(root)
 
     root.mainloop()
+
